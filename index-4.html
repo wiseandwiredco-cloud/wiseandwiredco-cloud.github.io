@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wise & Wired</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #EBE4D9;
+      --surface: #F5EFE6;
+      --border: #C8BFB0;
+      --accent: #F29B18;
+      --accent-dim: rgba(242,155,24,0.15);
+      --text: #011D41;
+      --muted: #7195C8;
+      --font: 'Josefin Sans', sans-serif;
+      --display: 'Josefin Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      background: rgba(235,228,217,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--text);
+    }
+
+    .nav-logo {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--text);
+      font-size: 17px;
+      font-family: var(--font);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+    /* SECTIONS */
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    /* HERO */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      padding-top: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #hero .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    #hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(1,29,65,0.25);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+    }
+
+    .hero-tagline {
+      font-family: var(--font);
+      font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+      font-weight: 500;
+      color: #fff;
+      margin-top: 1.5rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    /* MISSION (indigo block) */
+    #about {
+      background: var(--text);
+      padding: 7rem 2.5rem 6rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .about-label {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .about-heading {
+      font-family: var(--display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 2.5rem;
+    }
+
+    .about-body {
+      font-family: var(--font);
+      font-size: clamp(1rem, 1.6vw, 1.15rem);
+      font-weight: 500;
+      color: var(--bg);
+      max-width: 760px;
+    }
+
+    .about-body p { margin-bottom: 1.25rem; }
+    .about-body span { color: var(--accent); }
+
+    /* COURSE / PROJECTS */
+    #course {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 7rem 2rem 6rem;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .card-icon { font-size: 1.5rem; }
+    .card-links { display: flex; gap: 0.75rem; }
+    .card-links a { color: var(--muted); font-size: 13px; transition: color 0.2s; }
+    .card-links a:hover { color: var(--accent); text-decoration: none; }
+
+    .card h3 {
+      font-family: var(--display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text);
+      opacity: 0.75;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      font-family: var(--font);
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-dim);
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+
+    /* CONTACT / REACH OUT */
+    #contact {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 2rem 5rem;
+    }
+
+    .contact-box,
+    .contact-box:hover,
+    .contact-box:visited,
+    .contact-box * {
+      text-decoration: none !important;
+    }
+
+    .contact-box {
+      background: var(--text);
+      border-radius: 28px;
+      padding: 3.5rem 4rem;
+      text-align: center;
+      max-width: 760px;
+      width: 100%;
+      display: block;
+    }
+
+    .contact-box h2 {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-box .contact-sub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.65rem 1.75rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .contact-box:hover .contact-sub {
+      background: var(--accent-dim);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 13px;
+      color: var(--text);
+      opacity: 0.6;
+      border-top: 1px solid var(--border);
+      font-family: var(--font);
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: 14px; }
+      .nav-logo { font-size: 20px; }
+      #about { padding: 6rem 1.5rem 4rem; }
+      #course { padding: 5rem 1.25rem 4rem; }
+      .contact-box { padding: 2.5rem 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">Wise & Wired</span>
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#course">Course</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE 1: HERO -->
+  <section id="hero">
+    <img class="hero-bg" src="assets/images/hero.jpg" alt="Team collaborating around a table with devices">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Wise & Wired</h1>
+      <p class="hero-tagline">Building a Better Future With Technological Empowerment</p>
+    </div>
+  </section>
+
+  <!-- PAGE 2: OUR MISSION -->
+  <section id="about">
+    <div class="about-inner">
+      <p class="about-label">// hello, world</p>
+      <h2 class="about-heading">Our Mission</h2>
+      <div class="about-body">
+        <p>Wise & Wired helps <span>senior citizens</span> build confidence with technology through guided online video courses and friendly in-person seminars.</p>
+        <p>We believe technology should empower, not intimidate — so every lesson is paced thoughtfully and explained clearly, with real people ready to answer real questions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: COURSE -->
+  <section id="course">
+    <h2 class="section-heading">Course</h2>
+    <div class="project-grid">
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-icon">📁</span>
+          <div class="card-links">
+            <a href="#">GitHub ↗</a>
+            <a href="#">Live ↗</a>
+          </div>
+        </div>
+        <h3>Project One</h3>
+        <p>A short description of what this project does and the problem it solves. Keep it to 2–3 sentences.</p>
+        <div class="card-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-icon">🛠</span>
+          <div class="card-links">
+            <a href="#">GitHub ↗</a>
+            <a href="#">Live ↗</a>
+          </div>
+        </div>
+        <h3>Project Two</h3>
+        <p>Another project you're proud of. What did you build? What did you learn from it?</p>
+        <div class="card-tags">
+          <span class="tag">React</span>
+          <span class="tag">API</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-icon">🚀</span>
+          <div class="card-links">
+            <a href="#">GitHub ↗</a>
+          </div>
+        </div>
+        <h3>Project Three</h3>
+        <p>Duplicate and add as many of these cards as you need. Link to GitHub or a live demo.</p>
+        <div class="card-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 4: QUESTIONS / REACH OUT -->
+  <section id="contact">
+    <a href="mailto:wiseandwired.co@gmail.com" class="contact-box">
+      <h2>Questions?</h2>
+      <p class="contact-sub">Reach Out</p>
+    </a>
+  </section>
+
+  <footer>
+    Wise & Wired · hosted on GitHub Pages
+  </footer>
+
+</body>
+</html>
